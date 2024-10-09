@@ -4,8 +4,7 @@ import com.anyan.oj.constant.CommonConstant;
 import lombok.Data;
 
 /**
- * 分页请求
- */
+ * 分页请求 */
 @Data
 public class PageRequest {
 

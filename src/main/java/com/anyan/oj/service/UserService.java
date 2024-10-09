@@ -1,17 +1,18 @@
 package com.anyan.oj.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.anyan.oj.model.dto.user.UserQueryRequest;
 import com.anyan.oj.model.entity.User;
 import com.anyan.oj.model.vo.LoginUserVO;
 import com.anyan.oj.model.vo.UserVO;
-import java.util.List;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.IService;
+
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 用户服务
-*/
+ */
 public interface UserService extends IService<User> {
 
     /**
@@ -37,10 +38,9 @@ public interface UserService extends IService<User> {
     /**
      * 获取当前登录用户
      *
-     * @param request
      * @return
      */
-    User getLoginUser(HttpServletRequest request);
+    User getLoginUser();
 
     /**
      * 获取当前登录用户（允许未登录）
@@ -53,10 +53,9 @@ public interface UserService extends IService<User> {
     /**
      * 是否为管理员
      *
-     * @param request
      * @return
      */
-    boolean isAdmin(HttpServletRequest request);
+    boolean isAdmin();
 
     /**
      * 是否为管理员

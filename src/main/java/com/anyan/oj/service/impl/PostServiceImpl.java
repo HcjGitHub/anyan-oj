@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 
 /**
  * 帖子服务实现
-*/
+ */
 @Service
 @Slf4j
 public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements PostService {
@@ -159,7 +159,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         User loginUser = userService.getLoginUserPermitNull(request);
         if (loginUser != null) {
             Set<Long> postIdSet = postList.stream().map(Post::getId).collect(Collectors.toSet());
-            loginUser = userService.getLoginUser(request);
+            loginUser = userService.getLoginUser();
             // 获取点赞
             QueryWrapper<PostThumb> postThumbQueryWrapper = new QueryWrapper<>();
             postThumbQueryWrapper.in("postId", postIdSet);
