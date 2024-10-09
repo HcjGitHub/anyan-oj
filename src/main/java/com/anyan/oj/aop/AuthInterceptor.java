@@ -22,6 +22,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 */
 @Aspect
 @Component
+@Deprecated  // 设置为过期状态
 public class AuthInterceptor {
 
     @Resource
