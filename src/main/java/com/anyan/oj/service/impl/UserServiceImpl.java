@@ -1,12 +1,8 @@
 package com.anyan.oj.service.impl;
 
-import static com.anyan.oj.constant.UserConstant.USER_LOGIN_STATE;
-
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.anyan.oj.common.ErrorCode;
 import com.anyan.oj.constant.CommonConstant;
 import com.anyan.oj.exception.BusinessException;
@@ -18,19 +14,24 @@ import com.anyan.oj.model.vo.LoginUserVO;
 import com.anyan.oj.model.vo.UserVO;
 import com.anyan.oj.service.UserService;
 import com.anyan.oj.utils.SqlUtils;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletRequest;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.anyan.oj.constant.UserConstant.USER_LOGIN_STATE;
+
 /**
  * 用户服务实现
-*/
+ */
 @Service
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
@@ -116,11 +117,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 获取当前登录用户
      *
-     * @param request
      * @return
      */
     @Override
-    public User getLoginUser(HttpServletRequest request) {
+    public User getLoginUser() {
         // 先判断是否已登录
         if (!StpUtil.isLogin()) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
@@ -158,13 +158,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 是否为管理员
      *
-     * @param request
      * @return
      */
     @Override
-    public boolean isAdmin(HttpServletRequest request) {
+    public boolean isAdmin() {
         // 仅管理员可查询
-        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        Object userObj = StpUtil.getSession().get(USER_LOGIN_STATE);
         User user = (User) userObj;
         return isAdmin(user);
     }

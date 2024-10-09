@@ -65,7 +65,7 @@ public class PostController {
             post.setTags(JSONUtil.toJsonStr(tags));
         }
         postService.validPost(post, true);
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = userService.getLoginUser();
         post.setUserId(loginUser.getId());
         post.setFavourNum(0);
         post.setThumbNum(0);
@@ -87,13 +87,13 @@ public class PostController {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User user = userService.getLoginUser(request);
+        User user = userService.getLoginUser();
         long id = deleteRequest.getId();
         // 判断是否存在
         Post oldPost = postService.getById(id);
         ThrowUtils.throwIf(oldPost == null, ErrorCode.NOT_FOUND_ERROR);
         // 仅本人或管理员可删除
-        if (!oldPost.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
+        if (!oldPost.getUserId().equals(user.getId()) && !userService.isAdmin()) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
         boolean b = postService.removeById(id);
@@ -194,7 +194,7 @@ public class PostController {
         if (postQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = userService.getLoginUser();
         postQueryRequest.setUserId(loginUser.getId());
         long current = postQueryRequest.getCurrent();
         long size = postQueryRequest.getPageSize();
@@ -227,7 +227,7 @@ public class PostController {
         }
         // 参数校验
         postService.validPost(post, false);
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = userService.getLoginUser();
         long id = postEditRequest.getId();
         // 判断是否存在
         Post oldPost = postService.getById(id);
